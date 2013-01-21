@@ -1,0 +1,101 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Shared WhiteBoard</title>
+
+	<link rel="stylesheet" href="stylesheets/style.css">  
+	<script src="js/easeljs-0.5.0.min.js"></script>
+	<script src="js/jquery-1.9.0.min.js"></script>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="js/drawCanvas.js"></script> 
+	<script src="js/socketHandle.js"></script> 
+	<script src="js/jquery.purr.js"></script>
+
+	<script>
+		$(document).ready( function () {
+			$("#welcomeNotice").purr(
+				{
+					usingTransparentPNG: true,
+					isSticky: true
+				}
+			);
+			
+			showAbout();
+		});
+		
+		function showAbout() {
+			showChat(
+				{
+					username: "<br />The Creators", 
+					data: "<br />Created during a Node.JS Hackathon by:<br />"
+						+ '  <a href="http://twitter.com/killerspaz" target="new">@killerspaz</a><br />'
+						+ '  <a href="http://twitter.com/jadehyper" target="new">@jadehyper</a><br />'
+						+ "<br />"
+				}
+			);
+		}
+	
+		function showChat(message) {
+			var notice  = '<div class="notice">'
+					    + ' <div class="notice-body">' 
+						+ '  <img src="images/jquery-purr/info.png" alt="" />'
+						+ '  <h3>Message from ' + message.username + '</h3>'
+						+ '  <p>' + message.data + '</p>'
+					  	+ ' </div>'
+					  	+ ' <div class="notice-bottom" />'
+				  		+ '</div>';
+								  
+			$(notice).purr( { usingTransparentPNG: true, removeTimer: 10000 } );
+		}
+	</script>
+</head>
+
+<body onload="init();">
+
+	<header id="header">
+	    <h1><span class="text-product" onclick="showAbout()">Shared WhiteBoard</span></h1>
+	</header>
+	
+	<div id="welcomeNotice" class="notice">
+		<div class="notice-body">
+			<img src="images/jquery-purr/info.png" alt="" />
+			<h3>Welcome!</h3>
+			<p>
+				This is Shared WhiteBoard<br />
+				You should be able to see other people draw while you draw!<br />
+				<br />
+				Close this to remove the message.
+			</p>
+		</div>
+		
+		<div class="notice-bottom"></div>
+	</div>
+
+	<div style="float: left; padding-right: 30px">
+		<div class="row">
+	      <span class="label">Name:</span>
+	      <span class="formw"><input id="user" /></span>
+	    </div>
+	    
+	    <div class="row">
+	      <span class="label">Message:</span><span class="formw"><input id="data" /></span>
+	    </div>
+	    
+	    <div class="row">
+	      <span class="label"></span><span class="formw"><input type="button" id="datasend" style="float:right" value="send" disabled/></span>
+	    </div>
+	    
+	    <div class="row">
+	      <span class="label">Color:</span><span class="formw"><input id="colorPicker" type="color"></span>
+	    </div>
+	    
+	    <div class="row">
+	      <span class="label">Thickness:</span><span class="formw"><input id="drawThickness" type="range" min="2" max="50" /></span>
+	    </div>
+	</div>  
+	
+	<canvas id="myCanvas" width="960" height="400"></canvas>
+</body>
+</html>
